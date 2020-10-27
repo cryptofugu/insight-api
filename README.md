@@ -21,9 +21,9 @@
 * [Stake](#stake-statistic)
 * [Total Supply](#total-supply-statistic)
 
-A QTUM blockchain REST and web socket API service for [Qtumcore Node](https://github.com/qtumproject/qtumcore-node).
+A BCS blockchain REST and web socket API service for [BCScore Node](https://github.com/cryptofugu/bcscore-node).
 
-This is a backend-only service. If you're looking for the web frontend application, take a look at https://github.com/qtumproject/qtum-explorer.
+This is a backend-only service. If you're looking for the web frontend application, take a look at https://github.com/cryptofugu/bcs-explorer.
 
 ## Getting Started
 
@@ -35,39 +35,39 @@ This is a backend-only service. If you're looking for the web frontend applicati
     ```  
 2. Install mongo https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/  
 
-3. Install qtum https://github.com/qtumproject/qtum - with bitcore and ZMQ ! 
+3. Install bcs https://github.com/cryptofugu/bcs - with bitcore and ZMQ ! 
 
     ```bash
     # with ZMQ
     sudo apt-get install libzmq3-dev 
     # with bitcore
-    ./configure --enable-bitcore
+    ./configure --enable-bitcore-rpc
     ```  
-4. Install qtumcore-node  
+4. Install bcscore-node  
 
     ```bash
-    npm i https://github.com/qtumproject/qtumcore-node.git#master
+    npm i https://github.com/cryptofugu/bcscore-node.git#master
 
-    $(npm bin)/qtumcore-node create mynode
+    $(npm bin)/bcscore-node create mynode
 
     cd mynode
 
-    $(npm bin)/qtumcore-node install https://github.com/qtumproject/insight-api.git#master
+    $(npm bin)/bcscore-node install https://github.com/cryptofugu/insight-api.git#master
     ```  
-5. Edit qtumcore-node.json  
+5. Edit bcscore-node.json  
 
     ```json
     {
       "network": "livenet",
       "port": 3001,
       "services": [
-        "qtumd",
-        "qtum-insight-api",
+        "bcsd",
+        "bcs-insight-api",
         "web"
       ],
       "servicesConfig": {
-        "qtum-insight-api": {
-          "routePrefix": "qtum-insight-api",
+        "bcs-insight-api": {
+          "routePrefix": "bcs-insight-api",
           "rateLimiterOptions": {
           "whitelist": [
              "123.456.12.34",
@@ -81,7 +81,7 @@ This is a backend-only service. If you're looking for the web frontend applicati
           "db": {
             "host": "127.0.0.1",
             "port": "27017",
-            "database": "qtum-api-livenet",
+            "database": "bcs-api-livenet",
             "user": "",
             "password": ""
           },
@@ -89,16 +89,16 @@ This is a backend-only service. If you're looking for the web frontend applicati
             "updateFromBlockHeight": 0
           }
         },
-        "qtumd": {
+        "bcsd": {
           "spawn": {
-        	  "datadir": "/home/user/.qtum",
-            "exec": "/home/user/qtum-bitcore/src/qtumd"
+        	  "datadir": "/home/user/.bcs",
+            "exec": "/home/user/bcs-bitcore/src/bcsd"
           }
         }
       }
     }
     ```  
-6. Edit qtum.conf  
+6. Edit bcs.conf  
 
     ```
     server=1
@@ -121,28 +121,28 @@ This is a backend-only service. If you're looking for the web frontend applicati
 7. Run Node  
 
     ```
-    $(npm bin)/qtumcore-node start
+    $(npm bin)/bcscore-node start
     ```  
 
-8. The API endpoints will be available by default at: `http://localhost:3001/qtum-insight-api/`  
+8. The API endpoints will be available by default at: `http://localhost:3001/bcs-insight-api/`  
 
 ## Add-on Services
 
-There add-on service available to extend the functionality of Qtumcore:
+There add-on service available to extend the functionality of BCScore:
 
-- [QTUM Explorer](https://github.com/qtumproject/qtum-explorer)
+- [BCS Explorer](https://github.com/cryptofugu/bcs-explorer)
 
 ## Prerequisites
 
-**Note:** You can use an existing QTUM data directory, however `txindex`, `addressindex`, `timestampindex` and `spentindex` needs to be set to true in `qtum.conf`, as well as a few other additional fields.
+**Note:** You can use an existing BCS data directory, however `txindex`, `addressindex`, `timestampindex` and `spentindex` needs to be set to true in `bcs.conf`, as well as a few other additional fields.
 
 
 ## Query Rate Limit
 
-To protect the server, qtum-insight-api has a built it query rate limiter. It can be configurable in `qtumcore-node.json` with:
+To protect the server, bcs-insight-api has a built it query rate limiter. It can be configurable in `bcscore-node.json` with:
 ``` json
   "servicesConfig": {
-    "qtum-insight-api": {
+    "bcs-insight-api": {
       "rateLimiterOptions": {
         "whitelist": ["::ffff:127.0.0.1"]
       }
@@ -153,17 +153,17 @@ To protect the server, qtum-insight-api has a built it query rate limiter. It ca
 Or disabled entirely with:
 ``` json
   "servicesConfig": {
-    "qtum-insight-api": {
+    "bcs-insight-api": {
       "disableRateLimiter": true
     }
   }
   ```
   
-**Note:** `routePrefix` can be configurable in `qtumcore-node.json` with:
+**Note:** `routePrefix` can be configurable in `bcscore-node.json` with:
 
 ``` json
   "servicesConfig": {
-    "qtum-insight-api": {
+    "bcs-insight-api": {
       "routePrefix": "insight-api",
     }
   }
@@ -700,7 +700,7 @@ POST response:
   /insight-api/peer
 ```
 
-### Status of the QTUM Network
+### Status of the BCS Network
 ```
   /insight-api/status?q=xxx
 ```
